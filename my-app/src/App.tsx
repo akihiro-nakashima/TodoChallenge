@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
-import Todo from './components/Todo';
-import AddTodo from './components/AddTodo';
-// modelの導入は、可読性を上げるため（後述)
-import {ToDo1} from './todo.model';
+import React, {useState} from 'react';
+import {useRef} from 'react'; 
 
-const App: React.FC = () => {
-  // ToDoの中身がidとtextなので、ここでは[]を代入。
-  const [todos, setTodos] = useState<ToDo1[]>([]);
-  
+function App() {
 
-  const todoAdd = (text: string) => {
-    setTodos(prevTodos => [
-      ...prevTodos, 
-      { id: Math.random().toString(), text: text }
-      // これにより、{id: "0.8759291112629384", text: "宿題をする"}のようなデータをもつテキストが生成される。
-    ]);
-  };
+  const [todo, setTodo] = useState<{id:number; text:string; time:string}[]>([]);
   
+  const textInputRefTodo = useRef<HTMLInputElement>(null);
+  const textInputRefTime = useRef<HTMLInputElement>(null);
+  
+  const setTask = (event: React.FormEvent) =>{
+    
+    event.preventDefault();
+    setTodo([...todo,
+      {
+        id: todo.length,
+        text:textInputRefTodo.current!.value,
+        time:textInputRefTime.current!.value
+      }]);  
+  }
+
   return (
     <div className="App">
-      {/* AddTodo.tsxから渡されたテキストデータがここに入る*/}
-      <AddTodo todoAdded={ todoAdd } />
-      <Todo items={todos} />
+      <form className="App-form" onSubmit={setTask}>
+        <div>
+          <input id="title" placeholder="タスク名" ref={textInputRefTodo}/>
+          <input id="time" placeholder="mmdd" ref={textInputRefTime}/>   
+        </div>
+
+        <div>
+          <button type="submit">登録</button>
+        </div>
+      </form>
+      <div>
+        <ul>
+          {todo.map(todo => (<li key={todo.id}>{todo.text} {todo.time}</li>))}
+        </ul>
+      </div>
     </div>
   );
 }
