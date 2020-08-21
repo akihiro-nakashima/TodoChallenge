@@ -1,0 +1,18 @@
+.App-form {
+    position: relative;
+    margin: 10px auto;
+    text-align : center ; 
+	width: 27.33%;	
+}
+
+.App{
+    text-align : center ; 
+}
+
+.disp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
