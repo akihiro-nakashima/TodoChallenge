@@ -8,14 +8,14 @@ interface todos{
 const DisplayTodo: React.FC<todos> = (props) =>{
 
     return(
-			<div className="disp">
-      <ul>
-				{props.items.map(items => (
-					<li  key={items.id}>
-						{items.text} {items.time}
+		<div className="disp">
+      		<ul>
+				{props.items.map(todo => (
+					<li  key={todo.id}>
+						{todo.text} {todo.time}
 					</li>))}
 			</ul>  
-			</div>
+		</div>
     );
 } 
 
